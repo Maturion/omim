@@ -260,8 +260,11 @@ struct BestMatchedLangNames
     static int8_t const intCode = StringUtf8Multilang::GetLangIndex("int_name");
     static int8_t const englishCode = StringUtf8Multilang::GetLangIndex("en");
 
-    if (code == defaultCode)
+    if (code == defaultCode) {
       m_defaultName = name;
+      //In Georgia, English names are in brackets. This leads to unnecessary double translation
+      m_defaultName = name.substr(0, name.find_first_of('(')); 
+    }
     else if (code == nativeCode)
       m_nativeName = name;
     else if (code == intCode)
